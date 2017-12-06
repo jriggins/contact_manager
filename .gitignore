@@ -1,0 +1,8 @@
+.idea/
+*.pyc
+.cache
+
+# Robot Framework output files
+log.html
+output.xml
+report.html
