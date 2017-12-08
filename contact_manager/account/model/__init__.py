@@ -1,7 +1,6 @@
 class Account(object):
-    def __init__(self, user_name, name, password=None):
-        self.user_name = user_name
-        self.name = name
+    def __init__(self, email_address, password=None):
+        self.email_address = email_address
         self.hashed_password = self.hash_password(password)
 
     def hash_password(self, password):
