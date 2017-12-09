@@ -11,7 +11,7 @@ class Repository(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def find_user_by_email_address(self, email_address):
+    def find_by_email_address(self, email_address):
         pass
 
     @abc.abstractmethod
@@ -29,7 +29,7 @@ class InMemoryAccountRepository(Repository):
     def save(self, account):
         self._db[account.email_address] = account
 
-    def find_user_by_email_address(self, email_address):
+    def find_by_email_address(self, email_address):
         return self._db.get(email_address, None)
 
     def clear_all(self):
