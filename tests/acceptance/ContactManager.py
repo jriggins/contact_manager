@@ -19,7 +19,7 @@ class ContactManager:
         self.account_command_handler.register_account(account)
 
     def user_should_exist(self, user_name):
-        account = self.account_read_model.find_user_by_user_name(user_name)
+        account = self.account_read_model.find_by_email_address(user_name)
         assert account, 'Unable to find Account with username {0}'.format(user_name)
 
     def log_in(self, user_name):

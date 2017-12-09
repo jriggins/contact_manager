@@ -1,7 +1,7 @@
 import typing
 
 
-class RegisterAccount(typing.NamedTuple('RegisterAccount', [('email_address', str), ('password', str)])):
+class RegisterAccount(typing.NamedTuple('RegisterAccount', [('id', str), ('email_address', str), ('password', str)])):
     pass
 
 

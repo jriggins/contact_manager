@@ -5,6 +5,6 @@ def get(user_name):
     return globals()[user_name.upper()]
 
 
-USER1 = Account('user1', password='UserOnePassword')
+USER1 = Account('111', 'user1', password='UserOnePassword')
 
 

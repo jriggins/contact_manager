@@ -10,7 +10,6 @@ class CommandHandler(object):
         self._repo.clear_all()
 
     def register_account(self, command: command.RegisterAccount):
-        account = model.Account(command.email_address,
-                                self._hash_password(command.password))
+        account = model.Account(command.id, command.email_address, self._hash_password(command.password))
         self._repo.save(account)
 
