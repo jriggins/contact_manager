@@ -1,7 +1,7 @@
 import bcrypt
 import jwt
 
-from contact_manager.account import command, handler, model
+from contact_manager.account import command, model
 
 
 class Api:
@@ -19,11 +19,11 @@ class Api:
 
     def __init__(self, repo, session_secret):
         self._repo = repo
-        self._handler = handler.CommandHandler(self._repo, self._hash_password)
         self._session_secret = session_secret
 
     def register_account(self, command: command.RegisterAccount):
-        self._handler.register_account(command)
+        account = model.Account(command.id, command.email_address, self._hash_password(command.password))
+        self._repo.save(account)
 
     def login(self, command: command.Login) -> bytes:
         account = self._repo.find_by_email_address(command.email_address)
