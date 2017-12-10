@@ -1,7 +1,7 @@
 import bcrypt
 import jwt
 
-from contact_manager.account import command, model
+from contact_manager.account import command, model, exception
 
 
 class Api:
@@ -30,6 +30,4 @@ class Api:
         if account and self._is_valid_password(command.password, account.hashed_password):
             return self._create_session_token(account.id, self._session_secret)
         else:
-            raise Exception
-
-
+            raise exception.InvalidCredentials()

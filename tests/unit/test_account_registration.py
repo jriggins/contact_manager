@@ -1,7 +1,7 @@
 import jwt
 import pytest
 
-from contact_manager.account import api, command, repo
+from contact_manager.account import api, command, repo, exception
 
 
 @pytest.fixture()
@@ -26,4 +26,20 @@ def test_user1_can_log_in_with_correct_user_name_and_password(api_, session_secr
 
     logged_in_user1 = api_.login(command.Login('user1@example.com', 'User1Password'))
     assert jwt.decode(logged_in_user1, session_secret) == dict(id='123')
+
+
+def test_login_with_incorrect_email_address_fails(api_):
+    with pytest.raises(exception.InvalidCredentials):
+        api_.register_account(command.RegisterAccount('123', 'user1@example.com', 'User1Password'))
+
+        api_.login(command.Login('bad@example.com', 'User1Password'))
+
+
+def test_login_with_incorrect_password_fails(api_):
+    with pytest.raises(exception.InvalidCredentials):
+        api_.register_account(command.RegisterAccount('123', 'user1@example.com', 'User1Password'))
+
+        api_.login(command.Login('user1@example.com', 'WrongPassword'))
+
+
 
