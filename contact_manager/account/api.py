@@ -1,7 +1,7 @@
 import bcrypt
 import jwt
 
-from contact_manager.account import command, model, exception
+from . import command, model, exception
 
 
 class Api:
@@ -14,8 +14,8 @@ class Api:
         return bcrypt.checkpw(bytes(password, 'utf-8'), hashed_password)
 
     @classmethod
-    def _create_session_token(cls, id: str, session_secret: str):
-        return jwt.encode(dict(id=id), session_secret)
+    def _create_session_token(cls, id: str, session_secret: str) -> str:
+        return jwt.encode(dict(id=id), session_secret).decode('utf-8')
 
     def __init__(self, repo, session_secret):
         self._repo = repo
@@ -25,7 +25,7 @@ class Api:
         account = model.Account(command.id, command.email_address, self._hash_password(command.password))
         self._repo.save(account)
 
-    def login(self, command: command.Login) -> bytes:
+    def login(self, command: command.Login) -> str:
         account = self._repo.find_by_email_address(command.email_address)
         if account and self._is_valid_password(command.password, account.hashed_password):
             return self._create_session_token(account.id, self._session_secret)

@@ -1,10 +1,11 @@
+from contact_manager.account import api
 from .. import Account
 
 
-def get(user_name):
-    return globals()[user_name.upper()]
+def get(key):
+    return globals()[key.upper()]
 
 
-USER1 = Account('111', 'user1', password='UserOnePassword')
+USER1 = Account('111', 'user1@example.org', hashed_password=api.Api._hash_password('User1Password'))
 
 
