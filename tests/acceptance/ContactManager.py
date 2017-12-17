@@ -69,10 +69,10 @@ class ContactManager:
 
     def log_in(self, user_key):
         user = account_examples.get(user_key)
-        response = self.log_in2(user.email_address, 'User1Password')
+        response = self.log_in_with(user.email_address, 'User1Password')
         return response
 
-    def log_in2(self, email_address, password):
+    def log_in_with(self, email_address, password):
         response = self._post('/api/auth/login', dict(
             email_address=email_address,
             password=password,

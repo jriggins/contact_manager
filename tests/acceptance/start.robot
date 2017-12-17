@@ -29,7 +29,7 @@ user ${user} can log in
 
 
 user logs in with email ${email_address} and password ${password}
-  ${response}=  log in2  ${email_address}  ${password}
+  ${response}=  log in with  ${email_address}  ${password}
 
 
 login fails
