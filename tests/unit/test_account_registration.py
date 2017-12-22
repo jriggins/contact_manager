@@ -17,7 +17,7 @@ def api_(session_secret):
 def test_user1_can_register(api_):
     api_.register_account(command.RegisterAccount('123', 'user1@example.com', 'User1Password'))
 
-    registered_user1 = api_._repo.find_by_email_address('user1@example.com')
+    registered_user1 = api_._repo.find_by_account_id('user1@example.com')
     assert registered_user1
 
 
@@ -31,14 +31,12 @@ def test_user1_can_log_in_with_correct_user_name_and_password(api_, session_secr
 def test_login_with_incorrect_email_address_fails(api_):
     with pytest.raises(exception.InvalidCredentials):
         api_.register_account(command.RegisterAccount('123', 'user1@example.com', 'User1Password'))
-
         api_.login(command.Login('bad@example.com', 'User1Password'))
 
 
 def test_login_with_incorrect_password_fails(api_):
     with pytest.raises(exception.InvalidCredentials):
         api_.register_account(command.RegisterAccount('123', 'user1@example.com', 'User1Password'))
-
         api_.login(command.Login('user1@example.com', 'WrongPassword'))
 
 

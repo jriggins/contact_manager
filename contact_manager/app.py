@@ -12,7 +12,7 @@ def start_app(host, port, api_:api.Api, debug=False):
     def register_user():
         command_ = command.RegisterAccount(
             id=flask.request.json['id'],
-            email_address=flask.request.json['email_address'],
+            account_id=flask.request.json['account_id'],
             password=flask.request.json['password'],
         )
         api_.register_account(command_)
@@ -28,7 +28,7 @@ def start_app(host, port, api_:api.Api, debug=False):
 
     @app.route('/api/auth/login', methods=['POST'])
     def login():
-        command_ = command.Login(flask.request.json['email_address'], flask.request.json['password'])
+        command_ = command.Login(flask.request.json['account_id'], flask.request.json['password'])
         session = api_.login(command_)
         return flask.jsonify(dict(session_token=session))
 

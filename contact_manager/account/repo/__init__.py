@@ -11,7 +11,7 @@ class Repository(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    def find_by_email_address(self, email_address):
+    def find_by_account_id(self, account_id):
         pass
 
     @abc.abstractmethod
@@ -27,10 +27,10 @@ class InMemoryAccountRepository(Repository):
         return iter(self._db.values())
 
     def save(self, account):
-        self._db[account.email_address] = account
+        self._db[account.account_id] = account
 
-    def find_by_email_address(self, email_address):
-        return self._db.get(email_address, None)
+    def find_by_account_id(self, account_id):
+        return self._db.get(account_id, None)
 
     def clear_all(self):
         self._db = {}

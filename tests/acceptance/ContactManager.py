@@ -56,7 +56,7 @@ class ContactManager:
         user = account_examples.get(user_key)
         response = self._post('/api/account/register_user', dict(
             id=user.id,
-            email_address=user.email_address,
+            account_id=user.account_id,
             password='User1Password',
         ))
         assert 201 == response.status_code, 'Expected status code: {expected}  Received: {status_code}'.format(
@@ -64,17 +64,17 @@ class ContactManager:
 
     def user_should_exist(self, user_key):
         user = account_examples.get(user_key)
-        account = self._api._repo.find_by_email_address(user.email_address)
-        assert account, 'Unable to find Account with email address {0}'.format(email_address)
+        account = self._api._repo.find_by_account_id(user.account_id)
+        assert account, 'Unable to find Account with account ID {0}'.format(account.account_id)
 
     def log_in(self, user_key):
         user = account_examples.get(user_key)
-        response = self.log_in_with(user.email_address, 'User1Password')
+        response = self.log_in_with(user.account_id, 'User1Password')
         return response
 
-    def log_in_with(self, email_address, password):
+    def log_in_with(self, account_id, password):
         response = self._post('/api/auth/login', dict(
-            email_address=email_address,
+            account_id=account_id,
             password=password,
         ))
         if response.status_code == 200:

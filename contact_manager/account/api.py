@@ -22,11 +22,11 @@ class Api:
         self._session_secret = session_secret
 
     def register_account(self, command: command.RegisterAccount):
-        account = model.Account(command.id, command.email_address, self._hash_password(command.password))
+        account = model.Account(command.id, command.account_id, self._hash_password(command.password))
         self._repo.save(account)
 
     def login(self, command: command.Login) -> str:
-        account = self._repo.find_by_email_address(command.email_address)
+        account = self._repo.find_by_account_id(command.account_id)
         if account and self._is_valid_password(command.password, account.hashed_password):
             return self._create_session_token(account.id, self._session_secret)
         else:
